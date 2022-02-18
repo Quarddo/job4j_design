@@ -9,3 +9,12 @@
 - Set
 - Map
 - Tree
+- Ввод-вывод
+- Socket
+- Логгирование
+- Сериализация
+- Настройка PostgreSQL
+- Create Update Insert
+- Query
+- Outer join
+- 
