@@ -11,7 +11,7 @@ public class EvenNumbersIterator implements Iterator<Integer> {
     /**
      * Позиция указателя в массиве
      */
-    private int index;
+    private int index = 0;
 
     /**
      * Конструктор для инициализации массива
@@ -22,31 +22,18 @@ public class EvenNumbersIterator implements Iterator<Integer> {
     }
 
     /**
-     * Метод выполняет поиск ячейки в которой находиться четное число,
-     * при этом последующий поиск элемента будет уменьшать количество итераций цикла
-     * на index (позиция указателя в массиве). Если очередное четное число не найдено
-     * то метод вернет -1.
-     * @return - возвращает индекс ячейки где находится четное число.
-     */
-
-    /**
-     * Метод проверяет есть ли в массиве следующее четное число.
-     * Если метод exist возвращает 0 значит значение есть.
-     * @return - возвращает true если значение есть.
+     В данном методе цикл while пропускает нечетные элементы,
+     а оператор return проверяет коректность найденного индекса
+     и возвращает четное число
      */
     @Override
     public boolean hasNext() {
-        int value = -1;
-        boolean temp = false;
-        for (int i = index; i < data.length; i++) {
-            if (data[i] % 2 == 0) {
-                index = i;
-                value++;
-                temp = true;
-                break;
-            }
+        while (index < data.length
+                && data[index] % 2 != 0) {
+            index++;
         }
-        return temp;
+            return index < data.length
+                    && data[index] % 2 == 0;
     }
 
     /**
