@@ -28,17 +28,6 @@ public class EvenNumbersIterator implements Iterator<Integer> {
      * то метод вернет -1.
      * @return - возвращает индекс ячейки где находится четное число.
      */
-    private Integer exist() {
-        int value = -1;
-        for (int i = index; i < data.length; i++) {
-            if (data[i] % 2 == 0) {
-                index = i;
-                value++;
-                break;
-            }
-        }
-        return value;
-    }
 
     /**
      * Метод проверяет есть ли в массиве следующее четное число.
@@ -47,8 +36,17 @@ public class EvenNumbersIterator implements Iterator<Integer> {
      */
     @Override
     public boolean hasNext() {
-        return exist() == 0;
-
+        int value = -1;
+        boolean temp = false;
+        for (int i = index; i < data.length; i++) {
+            if (data[i] % 2 == 0) {
+                index = i;
+                value++;
+                temp = true;
+                break;
+            }
+        }
+        return temp;
     }
 
     /**
@@ -59,10 +57,9 @@ public class EvenNumbersIterator implements Iterator<Integer> {
      */
     @Override
     public Integer next() throws NoSuchElementException {
-        if (hasNext()) {
-            return data[index++];
-        } else {
+        if (!hasNext()) {
             throw new NoSuchElementException();
         }
+            return data[index++];
     }
 }
