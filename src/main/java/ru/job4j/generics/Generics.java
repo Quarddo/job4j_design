@@ -21,8 +21,8 @@ public class Generics {
 
         /**
          * Ошибка, т.к. Animal стоит выше чем Predator
+        gen.printBoundedWildCard(first);
          */
-        // gen.printBoundedWildCard(first);
         gen.printBoundedWildCard(second);
         gen.printBoundedWildCard(third);
         System.out.println();
@@ -31,8 +31,8 @@ public class Generics {
         gen.printLowerBoundedWildCard(second);
         /**
          * Ошибка, т.к. Tiger стоит ниже чем Predator
+        gen.printLowerBoundedWildCard(third);
          */
-        // gen.printLowerBoundedWildCard(third);
     }
 
     public void printObject(List<?> list) {
