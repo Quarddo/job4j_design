@@ -24,20 +24,25 @@ public class ForwardLinked<T> implements Iterable<T> {
     }
 
     /**
+     * T value - значение которое будем удалять
+     * Node<T> next - извлекаемый узел
      * Данный метод удаляет первый узел.
-     * Если первое значение не равно Null, значит список не пуст
-     * и мы меняем head (первый узел), на next (следующий узел).
-     * А если head равен null, то тогда список пуст и появится исключение
+     * Если первое значение равно Null, значит список пуст и появится исключение
+     * А если список не пуст, то мы обнуляем ссылки у удаляемого узла на
+     * следующий узел и на хранимое значение,
+     * так же мы меняем head (первый узел), на next (следующий узел).
      */
     public T deleteFirst() {
-        Node<T> rsl = head;
-        if (head != null) {
-            head = head.next;
-
-        } else {
+        if (head == null) {
             throw new NoSuchElementException();
         }
-        return rsl.value;
+        Node<T> next = head.next;
+        T value = head.value;
+        head.value = null;
+        head.next = null;
+        head = next;
+
+        return value;
     }
 
     @Override
