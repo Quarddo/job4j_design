@@ -62,11 +62,13 @@ public class ForwardLinked<T> implements Iterable<T> {
         return head == null;
     }
 
-    /** Даннный метод переворачивает связанный список
-     * Провереем первый элемент и ссылку на следующий элемент, если они равны Null, то выбрасывается исключение
+    /**
+     * Даннный метод переворачивает связанный список
      * head - храниться ссылка на предыдущий элемент
      * current - это ссылка на текущий элемент
      * next - это ссылка на следующий элемент
+     * Провереем первый элемент и ссылку на следующий элемент, если они не равны Null, то метод выполняется
+     * (т.к. пустой лист или с одним элементом не имеет смысла переворачивать)
      * Присваиваем последнему элементу первый
      * Создаем переменную, ссылку на текущий узел
      * Последний элемент списка не должен иметь ссылку на следущий элемент,поэтому присваиваем ему значение Null
@@ -78,17 +80,16 @@ public class ForwardLinked<T> implements Iterable<T> {
      */
     public boolean revert() {
         boolean rsl = false;
-        if (head == null || head.next == null) {
-            return rsl;
-        }
-        tail = head;
-        Node<T> current = head.next;
-        head.next = null;
-        while (current != null) {
-            Node<T> next = current.next;
-            current.next = head;
-            head = current;
-            current = next;
+        if (head != null && head.next != null) {
+            tail = head;
+            Node<T> current = head.next;
+            head.next = null;
+            while (current != null) {
+                Node<T> next = current.next;
+                current.next = head;
+                head = current;
+                current = next;
+            }
             rsl = true;
         }
         return rsl;
