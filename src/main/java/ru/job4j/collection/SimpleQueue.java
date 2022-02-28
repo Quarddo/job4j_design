@@ -6,6 +6,11 @@ public class SimpleQueue<T> {
     private final SimpleStack<T> in = new SimpleStack<>();
     private final SimpleStack<T> out = new SimpleStack<>();
 
+    /**
+     * Проверка стоставляющих стеков и если они они пустые, то
+     * выбрасывается исключение NoSuchElementException.
+     * @return возвращает первое значение и удалает его из коллекции
+     */
     public T poll() {
         if (in.isEmpty() && out.isEmpty()) {
             throw new NoSuchElementException();
