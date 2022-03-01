@@ -53,7 +53,7 @@ public class ListUtilsTest {
         List<Integer> input = new ArrayList<>(Arrays.asList(1, 2, 3, 4, 5));
         List<Integer> deleteElement = new ArrayList<>(Arrays.asList(2, 3, 4));
         ListUtils.removeAll(input, deleteElement);
-        assertThat(input,is(Arrays.asList(1, 5)));
+        assertThat(input, is(Arrays.asList(1, 5)));
     }
 
 }
