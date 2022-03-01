@@ -79,8 +79,8 @@ public class ForwardLinked<T> implements Iterable<T> {
      * После сдвинем все указатели на один элемент вперед
      */
     public boolean revert() {
-        boolean rsl = false;
-        if (head != null && head.next != null) {
+        boolean rsl = head != null && head.next != null;
+        if (rsl) {
             tail = head;
             Node<T> current = head.next;
             head.next = null;
@@ -90,7 +90,6 @@ public class ForwardLinked<T> implements Iterable<T> {
                 head = current;
                 current = next;
             }
-            rsl = true;
         }
         return rsl;
     }
