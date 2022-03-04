@@ -57,6 +57,20 @@ public class User {
         return Objects.hash(name, children, birthday);
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || obj.getClass() != getClass()) {
+            return false;
+        }
+        User user = (User) obj;
+        return user.name == this.name
+                && user.children == this.children
+                && user.birthday == this.birthday;
+    }
+
     public static void main(String[] args) {
         User us1 = new User("Max", 1, new GregorianCalendar(1995, Calendar.MAY, 21));
         User us2 = new User("Max", 1, new GregorianCalendar(1995, Calendar.MAY, 21));
