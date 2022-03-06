@@ -70,12 +70,12 @@ public class User {
                 && user.children == this.children
                 && user.birthday == this.birthday;
     }
-
+/**
     public static void main(String[] args) {
         User us1 = new User("Max", 1, new GregorianCalendar(1995, Calendar.MAY, 21));
         User us2 = new User("Max", 1, new GregorianCalendar(1995, Calendar.MAY, 21));
 
-        Map<User, Object> map = new HashMap<>(
+        ru.job4j.map.Map<User, Object> map = new HashMap<>(
                 Map.of(
                         us1, new Object(),
                         us2, new Object())
@@ -84,4 +84,5 @@ public class User {
         System.out.println(us1.hashCode());
         System.out.println(us2.hashCode());
     }
+    */
 }
