@@ -62,18 +62,14 @@ public class SimpleMap<K, V> implements Map<K, V> {
      */
     private void expand() {
             capacity *= 2;
-            table = Arrays.copyOf(table, capacity);
-            MapEntry<K, V>[] buket = new MapEntry[capacity];
-            for (int i = 0; i < capacity - 1; i++) {
-                if (table[i] == null) {
-                    K key = table[i].key;
-                    int index = indexFor(hash(key.hashCode()));
-                    if (buket[index] == null) {
-                        buket[index] = table[i];
+            MapEntry<K, V>[] newTable = new MapEntry[capacity];
+            for (MapEntry<K, V> pass : table) {
+                if (pass != null) {
+                    int index = indexFor(hash(pass.key.hashCode()));
+                    newTable[index] = pass;
                     }
                 }
-                table = Arrays.copyOf(buket, capacity);
-            }
+            table = newTable;
     }
 
     /**
@@ -84,7 +80,7 @@ public class SimpleMap<K, V> implements Map<K, V> {
     @Override
     public V get(K key) {
         V value = null;
-        int index = indexFor(key.hashCode());
+        int index = indexFor(hash(key.hashCode()));
         if (table[index] != null) {
             value = table[index].value;
         }
@@ -99,7 +95,7 @@ public class SimpleMap<K, V> implements Map<K, V> {
     @Override
     public boolean remove(K key) {
         boolean rsl = false;
-        int index = hash(key.hashCode());
+        int index = indexFor(hash(key.hashCode()));
         if (table[index] != null) {
             table[index] = null;
             rsl = true;

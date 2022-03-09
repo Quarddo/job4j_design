@@ -29,7 +29,7 @@ public class SimpleMapTest {
         SimpleMap<String, Integer> table = new SimpleMap<>();
         assertNull(table.get("one"));
     }
-/**
+
     @Test
     public void whenGet() {
         SimpleMap<String, Integer> table = new SimpleMap<>();
@@ -37,7 +37,16 @@ public class SimpleMapTest {
         table.put("two", 2);
         assertThat(table.get("one"), is(1));
     }
-*/
+
+    @Test
+    public void whenGetForKey() {
+        SimpleMap<String, Integer> table = new SimpleMap<>();
+        table.put("one", 1);
+        table.put("two", 2);
+        int key = table.get("two");
+        assertThat(key, is(2));
+    }
+
     @Test
     public void whenRemove() {
         SimpleMap<Integer, String> table = new SimpleMap<>();
