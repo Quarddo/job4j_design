@@ -44,7 +44,7 @@ public class SimpleTreeTest {
     @Test
     public void whenChildNotExistOnLeafThenAdd() {
         Tree<Integer> tree = new SimpleTree<>(1);
-        tree.add(1,2);
+        tree.add(1, 2);
         tree.add(1, 3);
         tree.add(1, 4);
         tree.add(4, 5);
@@ -52,7 +52,7 @@ public class SimpleTreeTest {
     }
 
     @Test
-    public void whenNewParentРHasNotParentAddFalse() {
+    public void whenNewParentHasNotParentAddFalse() {
         Tree<Integer> tree = new SimpleTree<>(1);
         tree.add(1, 2);
         assertFalse(tree.add(5, 6));
