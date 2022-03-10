@@ -103,7 +103,6 @@ public class SimpleMap<K, V> implements Map<K, V> {
             rsl = true;
             count--;
             modCount++;
-
         }
         return rsl;
     }
@@ -147,7 +146,5 @@ public class SimpleMap<K, V> implements Map<K, V> {
             this.key = key;
             this.value = value;
         }
-
     }
-
 }
