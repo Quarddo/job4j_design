@@ -1,6 +1,8 @@
 package ru.job4j.tree;
 
 import java.util.*;
+import java.util.function.Predicate;
+
 
 public class SimpleTree<E> implements Tree<E> {
     private final Node<E> root;
@@ -37,12 +39,31 @@ public class SimpleTree<E> implements Tree<E> {
      */
     @Override
     public Optional<Node<E>> findBy(E value) {
+        return findByPredicate(n -> n.value.equals(value));
+    }
+
+    /**
+     * Метод производит проверку, является ли дерево бинарным.
+     * если количество дочерних(children) узлов > 2, то дерево не бинарное
+     * @return true если дерево бинароне.
+     */
+    @Override
+    public boolean isBinary() {
+        return findByPredicate(n -> n.children.size() > 2).isEmpty();
+    }
+
+    /**
+     * Метод осуществляет перебр всех елементов дерева, и осуществления проверки Predicate condition
+     * @param condition задает условие с проверкой true / false
+     * @return возвращает rsl элемент соответствующий условию condition
+     */
+    private Optional<Node<E>> findByPredicate(Predicate<Node<E>> condition) {
         Optional<Node<E>> rsl = Optional.empty();
         Queue<Node<E>> data = new LinkedList<>();
         data.offer(this.root);
         while (!data.isEmpty()) {
             Node<E> el = data.poll();
-            if (el.value.equals(value)) {
+            if (condition.test(el)) {
                 rsl = Optional.of(el);
                 break;
             }
