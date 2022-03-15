@@ -4,9 +4,9 @@ import java.util.Objects;
 
 public class Info {
 
-    int added;
-    int changed;
-    int delete;
+    private int added;
+    private int changed;
+    private int delete;
 
     public Info(int added, int changed, int delete) {
         this.added = added;

@@ -34,7 +34,7 @@ public class AnalizeTest {
                 is(new Info(0, 1, 0))
         );
     }
-/**
+
     @Test
     public void whenOneDeleted() {
         User u1 = new User(1, "A");
@@ -60,7 +60,7 @@ public class AnalizeTest {
                 is(new Info(1, 0, 0))
         );
     }
-*/
+
     @Test
     public void whenAllChanged() {
         User u1 = new User(1, "A");
