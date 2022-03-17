@@ -23,8 +23,13 @@ public class LogFilter {
         return rsl;
     }
 
+    /**
+     * Данный метод, записывает результат листа log в file
+     * @param log данные хранящиеся в листе
+     * @param file фаил куда записавается результат
+     */
     public static void save(List<String> log, String file) {
-        try(PrintWriter out = new PrintWriter(
+        try (PrintWriter out = new PrintWriter(
                 new BufferedOutputStream(
                         new FileOutputStream(file)
                 ))) {
