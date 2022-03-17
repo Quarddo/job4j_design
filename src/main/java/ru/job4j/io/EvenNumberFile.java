@@ -1,6 +1,7 @@
 package ru.job4j.io;
 
 import java.io.FileInputStream;
+import java.io.IOException;
 
 public class EvenNumberFile {
     /**
@@ -24,7 +25,7 @@ public class EvenNumberFile {
                         ? " - четное число" : " - нечетное число";
                 System.out.println(line + num);
             }
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
