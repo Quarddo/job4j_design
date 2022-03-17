@@ -22,7 +22,7 @@ public class LogFilter {
         }
         return rsl;
     }
-/**
+
     public static void save(List<String> log, String file) {
         try(PrintWriter out = new PrintWriter(
                 new BufferedOutputStream(
@@ -33,12 +33,12 @@ public class LogFilter {
             e.printStackTrace();
         }
     }
-*/
+
     public static void main(String[] args) {
         LogFilter logFilter = new LogFilter();
         List<String> log = logFilter.filter("log.txt");
         log.forEach(System.out::print);
-       /** save(log, "404.txt"); */
+        save(log, "404.txt");
 
     }
 }
