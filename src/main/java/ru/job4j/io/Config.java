@@ -16,6 +16,11 @@ public class Config {
         this.path = path;
     }
 
+    /**
+     * Метод добавляет инфорвацию с файла .properties в config -> key, value
+     * метод игнорирует комментарии
+     * метод игнорирует пустые строки
+     */
     public void load() {
         try (BufferedReader read = new BufferedReader(new FileReader(path))) {
             String rslLine = read.readLine();
@@ -35,10 +40,17 @@ public class Config {
         }
     }
 
+    /**
+     * @param key ключ по которому возвращается значение
+     * @return Метод возвращает значение ключа
+     */
     public String value(String key) {
         return values.get(key);
     }
 
+    /**
+     * Переопределенный метод, выводит на экран содержимоее config
+     */
     @Override
     public String toString() {
         StringJoiner out = new StringJoiner(System.lineSeparator());
