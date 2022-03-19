@@ -22,9 +22,9 @@ public class Config {
             while (rslLine != null) {
                 if (!rslLine.isEmpty() && !rslLine.contains("#")
                         && rslLine.contains("=")) {
-                    String[] strings = rslLine.split("=");
+                    String[] strings = rslLine.split("=", 2);
                     if (strings[0].isEmpty() || strings[1].isEmpty()) {
-                        throw new IllegalArgumentException();
+                        throw new IllegalArgumentException("Нарушен шаблон файла.");
                     }
                     values.put(strings[0], strings[1]);
                 }
