@@ -15,9 +15,10 @@ public class Analizy {
                         serverActivity = true;
                     }
                     if (serverActivity && (rsl[0].equals("200") || rsl[0].equals("300"))) {
-                        writer.print("по " + rsl[1]);
+                        writer.println(" по " + rsl[1]);
                         serverActivity = false;
                     }
+                    line = reader.readLine();
                 }
             } catch (IOException e) {
                 e.printStackTrace();
@@ -26,6 +27,6 @@ public class Analizy {
 
     public static void main(String[] args) {
         Analizy analysis = new Analizy();
-        analysis.unavailable(".server/server.txt", ".server/unavailable.txt");
+        analysis.unavailable("server.log", "unavailable.csv");
     }
 }
