@@ -8,14 +8,16 @@ public class Analizy {
             try (BufferedReader reader = new BufferedReader(new FileReader(source));
                  PrintWriter writer = new PrintWriter(new FileOutputStream(target))) {
                 String line = reader.readLine();
+                writer.print(target
+                        + System.lineSeparator());
                 while (line != null) {
                     String[] rsl = line.split(" ", 2);
-                    if (!serverActivity && (rsl[0].equals("400") || rsl[0].equals("500"))) {
-                        writer.print("Сервер не работал с " + rsl[1]);
+                    if (!serverActivity && ("400".equals(rsl[0]) || "500".equals(rsl[0]))) {
+                        writer.print(rsl[1] + ";");
                         serverActivity = true;
                     }
-                    if (serverActivity && (rsl[0].equals("200") || rsl[0].equals("300"))) {
-                        writer.println(" по " + rsl[1]);
+                    if (serverActivity && ("200".equals(rsl[0]) || "300".equals(rsl[0]))) {
+                        writer.println(rsl[1]);
                         serverActivity = false;
                     }
                     line = reader.readLine();
