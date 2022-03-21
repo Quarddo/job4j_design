@@ -8,8 +8,6 @@ public class Analizy {
             try (BufferedReader reader = new BufferedReader(new FileReader(source));
                  PrintWriter writer = new PrintWriter(new FileOutputStream(target))) {
                 String line = reader.readLine();
-                writer.print(target
-                        + System.lineSeparator());
                 while (line != null) {
                     String[] rsl = line.split(" ", 2);
                     if (!serverActivity && ("400".equals(rsl[0]) || "500".equals(rsl[0]))) {
