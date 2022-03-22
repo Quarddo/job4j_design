@@ -20,6 +20,6 @@ public class DuplicatesVisitor extends SimpleFileVisitor<Path> {
         } else {
             notDuplicate.add(fileProper);
         }
-        return CONTINUE;
+        return super.visitFile(file, attrs);
     }
 }
