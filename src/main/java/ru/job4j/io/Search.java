@@ -14,10 +14,13 @@ public class Search {
         if (args.length != 2) {
             throw new IllegalArgumentException("Root folder is null. Usage java -jar dir.jar ROOT_FOLDER.");
         }
-        if (!start.toFile().exists() && !start.toFile().isDirectory()) {
-            throw new IllegalArgumentException("The file does not exist (has no path) and is not a directory.");
+        if (!start.toFile().exists() || !start.toFile().isDirectory()) {
+            throw new IllegalArgumentException("Directory does not exist or is not a directory.");
         }
-        search(start, p -> p.toFile().getName().endsWith(".js")).forEach(System.out::println);
+        if (!args[1].startsWith(".")) {
+            throw new IllegalArgumentException("The second parameter does not match the format.");
+        }
+        search(start, p -> p.toFile().getName().endsWith(args[1])).forEach(System.out::println);
     }
 
     public static List<Path> search(Path root, Predicate<Path> condition) throws IOException {
