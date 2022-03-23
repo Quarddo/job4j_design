@@ -10,15 +10,17 @@ import java.util.*;
 import static java.nio.file.FileVisitResult.CONTINUE;
 
 public class DuplicatesVisitor extends SimpleFileVisitor<Path> {
-    Set<FileProperty> notDuplicate = new HashSet<>();
+    Map<FileProperty, List<Path>> notDuplicate = new HashMap<>();
+    List<Path> duplicate = new ArrayList<>();
 
     @Override
     public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
         FileProperty fileProper = new FileProperty(attrs.size(), file.toFile().getName());
-        if (notDuplicate.contains(fileProper)) {
+        if (notDuplicate.containsKey(fileProper)) {
             System.out.println("Дубликат: " + file.toAbsolutePath());
         } else {
-            notDuplicate.add(fileProper);
+            duplicate.add(file);
+            notDuplicate.put(fileProper, duplicate);
         }
         return super.visitFile(file, attrs);
     }
