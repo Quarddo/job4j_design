@@ -27,7 +27,7 @@ public class ArgsNameTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void whenGetNotExist() {
-        ArgsName jvm = ArgsName.of(new String[] {});
+        ArgsName jvm = ArgsName.of(new String[] {"-Xmx=512"});
         jvm.get("Xms");
     }
 
