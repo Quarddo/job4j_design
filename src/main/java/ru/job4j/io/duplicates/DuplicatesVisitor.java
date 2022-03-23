@@ -15,9 +15,10 @@ public class DuplicatesVisitor extends SimpleFileVisitor<Path> {
     @Override
     public FileVisitResult visitFile(Path file, BasicFileAttributes attrs) throws IOException {
         FileProperty fileProper = new FileProperty(attrs.size(), file.toFile().getName());
-        if (notDuplicate.put(fileProper, new ArrayList<>()) != null) {
-           notDuplicate.get(fileProper).add(file.toAbsolutePath());
+        if (!notDuplicate.containsKey(fileProper)) {
+            notDuplicate.put(fileProper, new ArrayList<>());
         }
+        notDuplicate.get(fileProper).add(file.toAbsolutePath());
         return super.visitFile(file, attrs);
     }
 
