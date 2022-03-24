@@ -20,13 +20,19 @@ public class ArgsName {
         }
         for (String arg : args) {
             String[] rsl = arg.split("=", 2);
-            if (rsl.length != 2 || rsl[0].isEmpty()
-                    || !rsl[0].startsWith("-")
-                    || rsl[1].isEmpty()) {
-                throw new IllegalArgumentException("Invalid value format.");
+            if (checkPattern(rsl)) {
+                values.put(rsl[0].substring(1), rsl[1]);
             }
-            values.put(rsl[0].substring(1), rsl[1]);
         }
+    }
+
+    private static boolean checkPattern(String[] rsl) {
+        if (rsl.length != 2 || rsl[0].isEmpty()
+                || !rsl[0].startsWith("-")
+                || rsl[1].isEmpty()) {
+            throw new IllegalArgumentException("Invalid value format.");
+        }
+        return true;
     }
 
     public static ArgsName of(String[] args) {
