@@ -1,10 +1,13 @@
 package ru.job4j.io;
 
 import java.io.*;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import java.util.stream.Collectors;
+import java.nio.charset.StandardCharsets;
 
 public class ConsoleChat {
     private static final String OUT = "закончить";
@@ -48,7 +51,7 @@ public class ConsoleChat {
 
     private List<String> readPhrases() {
         List<String> list = new ArrayList<>();
-        try (BufferedReader reader = new BufferedReader(new FileReader(botAnswers))) {
+        try (BufferedReader reader = new BufferedReader(new FileReader(botAnswers, StandardCharsets.UTF_8))) {
             list = reader.lines().collect(Collectors.toList());
         } catch (IOException e) {
             e.printStackTrace();
@@ -57,7 +60,7 @@ public class ConsoleChat {
     }
 
     private void saveLog(List<String> log) {
-        try (PrintWriter writer = new PrintWriter(new FileWriter(path, true))) {
+        try (PrintWriter writer = new PrintWriter(new FileWriter(path, StandardCharsets.UTF_8, true))) {
             log.forEach(writer::println);
         } catch (IOException e) {
             e.printStackTrace();
