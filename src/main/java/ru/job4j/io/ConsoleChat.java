@@ -21,7 +21,7 @@ public class ConsoleChat {
     public void run() {
         List<String> log = new ArrayList<>();
         List<String> listAnswers = readPhrases();
-        try(BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(System.in))) {
             String line = reader.readLine();
             log.add(line);
             boolean botAction = true;
