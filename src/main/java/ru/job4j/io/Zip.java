@@ -21,28 +21,16 @@ public class Zip {
         }
     }
 
-    public void packSingleFile(File source, File target) {
-        try (ZipOutputStream zip = new ZipOutputStream(new BufferedOutputStream(new FileOutputStream(target)))) {
-            zip.putNextEntry(new ZipEntry(source.getPath()));
-            try (BufferedInputStream out = new BufferedInputStream(new FileInputStream(source))) {
-                zip.write(out.readAllBytes());
-            }
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-    }
-
     public static void main(String[] args) throws IOException {
         ArgsName argsName = ArgsName.of(args);
         Path directory = Path.of(argsName.get("d"));
         String excludeFiles = argsName.get("e");
-        if (validate(args, directory, excludeFiles)) {
+        validate(args, directory, excludeFiles);
             List<Path> filter = Search.search(directory, p -> !p.toFile().getName()
                     .endsWith(excludeFiles));
             File outPut = new File(argsName.get("o"));
             Zip zip = new Zip();
             zip.packFiles(filter, outPut);
-        }
     }
 
     public static boolean validate(String[] args, Path directory, String excludeFiles) {
