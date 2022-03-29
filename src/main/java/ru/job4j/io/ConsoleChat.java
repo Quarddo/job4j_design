@@ -9,6 +9,16 @@ import java.util.Random;
 import java.util.stream.Collectors;
 import java.nio.charset.StandardCharsets;
 
+/**
+ * 'Консольный чат'. Описание:
+ * пользователь вводит слово-фразу, программа берет случайную фразу из текстового файла и выводит в ответ.
+ * если пользователь вводит слово:
+ * - «стоп» программа замолкает, при этом он может продолжать отправлять сообщения в чат.
+ * - «продолжить» программа снова начинает отвечать.
+ * - «закончить» программа прекращает работу.
+ * запись диалога в текстовый лог включает слова-команды стоп/продолжить/закончить.
+ */
+
 public class ConsoleChat {
     private static final String OUT = "закончить";
     private static final String STOP = "стоп";
@@ -16,11 +26,21 @@ public class ConsoleChat {
     private final String path;
     private final String botAnswers;
 
+    /**
+     * класс принимает в конструктор 2 параметра
+     * path - имя файла, в который будет записан весь диалог между ботом и пользователем,
+     * botAnswers - имя файла в котором находятся строки с ответами,
+     * которые будет использовать бот
+     */
+
     public ConsoleChat(String path, String botAnswers) {
         this.path = path;
         this.botAnswers = botAnswers;
     }
 
+    /**
+     * содержит логику чата;
+     */
     public void run() {
         List<String> log = new ArrayList<>();
         List<String> listAnswers = readPhrases();
@@ -49,6 +69,11 @@ public class ConsoleChat {
         }
     }
 
+    /**
+     * читает фразы из файла;
+     *
+     * @return список ответов
+     */
     private List<String> readPhrases() {
         List<String> list = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(botAnswers, StandardCharsets.UTF_8))) {
@@ -59,6 +84,9 @@ public class ConsoleChat {
         return list;
     }
 
+    /**
+     * сохраняет лог чата в файл
+     */
     private void saveLog(List<String> log) {
         try (PrintWriter writer = new PrintWriter(new FileWriter(path, StandardCharsets.UTF_8, true))) {
             log.forEach(writer::println);
