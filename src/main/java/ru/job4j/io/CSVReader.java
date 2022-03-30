@@ -23,14 +23,14 @@ public class CSVReader {
     }
 
     public static void validate(ArgsName argsName) {
+        if (!";".equals(delimiter)) {
+            throw new IllegalArgumentException("The given delimiter does not match the pattern.");
+        }
         if (argsName.size() != 4) {
-            throw new IllegalArgumentException("Wrong number of arguments");
+            throw new IllegalArgumentException("Wrong number of arguments.");
         }
-        if (!path.toFile().exists()) {
-            throw new IllegalArgumentException("File doesn't exist");
-        }
-        if (!path.toFile().isFile()) {
-            throw new IllegalArgumentException("File is not file");
+        if (!path.toFile().exists() || !path.toFile().isFile()) {
+            throw new IllegalArgumentException("File doesn't exist or File is not file.");
         }
     }
 
@@ -49,5 +49,10 @@ public class CSVReader {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public static void main(String[] args) throws Exception {
+        ArgsName argsName = ArgsName.of(args);
+        handle(argsName);
     }
 }
