@@ -4,10 +4,7 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Scanner;
-import java.util.StringJoiner;
+import java.util.*;
 
 public class CSVReader {
     private static Path path;
@@ -42,14 +39,23 @@ public class CSVReader {
             PrintWriter writer = new PrintWriter(new FileWriter(out, StandardCharsets.UTF_8));
             while (scanner.hasNext()) {
                 list.add(scanner.nextLine().split(delimiter));
-                for (String[] strings : list) {
-                    writer.println(strings[0] + strings[1]);
+            }
+            List<String> filters = Arrays.asList(filter.split(","));
+            for (String[] strings : list) {
+                StringJoiner stringJoiner = new StringJoiner(delimiter);
+                for (int i = 0; i < strings.length; i++) {
+                    if (filters.contains(list.get(0)[i])) {
+                        stringJoiner.add(strings[i]);
+                    }
+                    writer.println(stringJoiner);
                 }
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
+
+
 
     public static void main(String[] args) throws Exception {
         ArgsName argsName = ArgsName.of(args);
