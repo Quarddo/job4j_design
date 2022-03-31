@@ -20,9 +20,10 @@ public class CSVReader {
     }
 
     public static void validate(ArgsName argsName) {
-        if (!";".equals(delimiter)) {
+        if (!delimiter.equals(";")) {
             throw new IllegalArgumentException("The given delimiter does not match the pattern.");
         }
+
         if (argsName.size() != 4) {
             throw new IllegalArgumentException("Wrong number of arguments.");
         }
@@ -34,8 +35,8 @@ public class CSVReader {
     public static void handle(ArgsName argsName) throws Exception {
         validate(argsName);
         List<String[]> list = new ArrayList<>();
-        try (Scanner scanner = new Scanner(new FileInputStream(path.toFile()), StandardCharsets.UTF_8)
-                .useDelimiter(";" + System.lineSeparator())) {
+        try (Scanner scanner = new Scanner(new FileInputStream(path.toFile()), StandardCharsets.UTF_8)) {
+            scanner.useDelimiter(";");
             PrintWriter writer = new PrintWriter(new FileWriter(out, StandardCharsets.UTF_8));
             while (scanner.hasNext()) {
                 list.add(scanner.nextLine().split(delimiter));
@@ -46,6 +47,8 @@ public class CSVReader {
                 for (int i = 0; i < strings.length; i++) {
                     if (filters.contains(list.get(0)[i])) {
                         stringJoiner.add(strings[i]);
+                    } else {
+                        stringJoiner.add(strings[i]).add(";");
                     }
                     writer.println(stringJoiner);
                 }
@@ -55,10 +58,12 @@ public class CSVReader {
         }
     }
 
-
-
     public static void main(String[] args) throws Exception {
-        ArgsName argsName = ArgsName.of(args);
+        File file = new File("/Users/maksimteriushov/projects/job4j_design/source.csv");
+        File target = new File("/Users/maksimteriushov/projects/job4j_design/data/target.csv");
+        ArgsName argsName = ArgsName.of(new String[]{
+                "-path=" + file.getAbsolutePath(), "-delimiter=;", "-out=" + target.getAbsolutePath(), "-filter=name,age"
+        });
         handle(argsName);
     }
 }
