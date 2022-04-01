@@ -10,13 +10,13 @@ public class CSVReader {
     private static Path path;
     private static String delimiter;
     private static String out;
-    private static String filter;
+    private static String[] filter;
 
     public CSVReader(ArgsName args) {
         path = Paths.get(args.get("path"));
         delimiter = args.get("delimiter");
         out = args.get("out");
-        filter = args.get("filter");
+        filter = args.get("filter").split(",");
     }
 
     public static void validate(ArgsName argsName) {
@@ -34,28 +34,58 @@ public class CSVReader {
 
     public static void handle(ArgsName argsName) throws Exception {
         validate(argsName);
-        List<String[]> list = new ArrayList<>();
         try (Scanner scanner = new Scanner(new FileInputStream(path.toFile()), StandardCharsets.UTF_8)) {
             scanner.useDelimiter(";");
-            PrintWriter writer = new PrintWriter(new FileWriter(out, StandardCharsets.UTF_8));
-            while (scanner.hasNext()) {
-                list.add(scanner.nextLine().split(delimiter));
-            }
-            List<String> filters = Arrays.asList(filter.split(","));
-            for (String[] strings : list) {
-                StringJoiner stringJoiner = new StringJoiner(delimiter);
-                for (int i = 0; i < strings.length; i++) {
-                    if (filters.contains(list.get(0)[i])) {
-                        stringJoiner.add(strings[i]);
-                    } else {
-                        stringJoiner.add(strings[i]).add(";");
-                    }
-                    writer.println(stringJoiner);
+            List<String> listWriter = new ArrayList<>();
+            List<Integer> listIndex = new ArrayList<>();
+            while (scanner.hasNextLine()) {
+                String[] line = scanner.nextLine().split(";");
+                if (listIndex.isEmpty()) {
+                    listIndex = retrieveColumnsIndices(line, filter);
+                    String concatString = concatStr(line, listIndex);
+                    listWriter.add(concatString);
                 }
+                outPutData(listWriter);
             }
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private static List<Integer> retrieveColumnsIndices(String[] splitString, String[] columns) {
+        List<Integer> indexList = new ArrayList<>();
+        for (String colName : columns) {
+            int n = Arrays.asList(splitString).indexOf(colName);
+            if (n != -1) {
+                indexList.add(n);
+            }
+        }
+        return indexList;
+    }
+
+    private static void outPutData(List<String> listWriter) {
+        if ("stdout".equals(out)) {
+            System.out.println(listWriter);
+        } else {
+            try (PrintWriter pw = new PrintWriter(new FileWriter(out, StandardCharsets.UTF_8))) {
+                pw.println(listWriter);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
+    private static String concatStr(String[] splitString, List<Integer> indexList) {
+        StringBuilder str = new StringBuilder();
+        for (int i = 0; i < indexList.size(); i++) {
+            int index = indexList.get(i);
+            if (i == indexList.size() - 1) {
+                str.append(splitString[index]);
+            } else {
+                str.append(splitString[index]).append(";");
+            }
+        }
+        return str.toString();
     }
 
     public static void main(String[] args) throws Exception {
