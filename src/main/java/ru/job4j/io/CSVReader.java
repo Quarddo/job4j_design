@@ -89,11 +89,7 @@ public class CSVReader {
     }
 
     public static void main(String[] args) throws Exception {
-        File file = new File("/Users/maksimteriushov/projects/job4j_design/source.csv");
-        File target = new File("/Users/maksimteriushov/projects/job4j_design/data/target.csv");
-        ArgsName argsName = ArgsName.of(new String[]{
-                "-path=" + file.getAbsolutePath(), "-delimiter=;", "-out=" + target.getAbsolutePath(), "-filter=name,age"
-        });
+        ArgsName argsName = ArgsName.of(args);
         handle(argsName);
     }
 }
