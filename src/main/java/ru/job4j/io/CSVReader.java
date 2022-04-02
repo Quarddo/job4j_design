@@ -19,7 +19,8 @@ public class CSVReader {
         filter = args.get("filter").split(",");
     }
 
-    public static void validate(ArgsName argsName) {
+    public void validate(ArgsName argsName) {
+        CSVReader csvReader = new CSVReader(argsName);
         if (!delimiter.equals(";")) {
             throw new IllegalArgumentException("The given delimiter does not match the pattern.");
         }
@@ -33,7 +34,8 @@ public class CSVReader {
     }
 
     public static void handle(ArgsName argsName) throws Exception {
-        validate(argsName);
+        CSVReader csvReader = new CSVReader(argsName);
+        csvReader.validate(argsName);
         try (Scanner scanner = new Scanner(new FileInputStream(path.toFile()), StandardCharsets.UTF_8)) {
             scanner.useDelimiter(";");
             List<String> listWriter = new ArrayList<>();
@@ -42,12 +44,12 @@ public class CSVReader {
                 String[] line = scanner.nextLine().split(";");
                 if (listIndex.isEmpty()) {
                     listIndex = retrieveColumnsIndices(line, filter);
-                    String concatString = concatStr(line, listIndex);
-                    listWriter.add(concatString);
                 }
-                outPutData(listWriter);
+                String concatString = concatStr(line, listIndex);
+                listWriter.add(concatString + System.lineSeparator());
             }
-        } catch (IOException e) {
+            outPutData(listWriter);
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
