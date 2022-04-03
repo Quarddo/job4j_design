@@ -7,10 +7,10 @@ import java.nio.file.Paths;
 import java.util.*;
 
 public class CSVReader {
-    private static Path path;
-    private static String delimiter;
-    private static String out;
-    private static String[] filter;
+    private final Path path;
+    private final String delimiter;
+    private final String out;
+    private final String[] filter;
 
     public CSVReader(ArgsName args) {
         path = Paths.get(args.get("path"));
@@ -19,21 +19,17 @@ public class CSVReader {
         filter = args.get("filter").split(",");
     }
 
-    public void validate(ArgsName argsName) {
-        CSVReader csvReader = new CSVReader(argsName);
-        if (!delimiter.equals(";")) {
+    private void validate(ArgsName argsName) {
+        if (!";".equals(delimiter)) {
             throw new IllegalArgumentException("The given delimiter does not match the pattern.");
         }
 
-        if (argsName.size() != 4) {
-            throw new IllegalArgumentException("Wrong number of arguments.");
-        }
         if (!path.toFile().exists() || !path.toFile().isFile()) {
             throw new IllegalArgumentException("File doesn't exist or File is not file.");
         }
     }
 
-    public static void handle(ArgsName argsName) throws Exception {
+    public void handle(ArgsName argsName) {
         CSVReader csvReader = new CSVReader(argsName);
         csvReader.validate(argsName);
         try (Scanner scanner = new Scanner(new FileInputStream(path.toFile()), StandardCharsets.UTF_8)) {
@@ -48,13 +44,14 @@ public class CSVReader {
                 String concatString = concatStr(line, listIndex);
                 listWriter.add(concatString + System.lineSeparator());
             }
+
             outPutData(listWriter);
-        } catch (Exception e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    private static List<Integer> retrieveColumnsIndices(String[] splitString, String[] columns) {
+    private List<Integer> retrieveColumnsIndices(String[] splitString, String[] columns) {
         List<Integer> indexList = new ArrayList<>();
         for (String colName : columns) {
             int n = Arrays.asList(splitString).indexOf(colName);
@@ -65,7 +62,7 @@ public class CSVReader {
         return indexList;
     }
 
-    private static void outPutData(List<String> listWriter) {
+    private void outPutData(List<String> listWriter) {
         if ("stdout".equals(out)) {
             System.out.println(listWriter);
         } else {
@@ -77,7 +74,7 @@ public class CSVReader {
         }
     }
 
-    private static String concatStr(String[] splitString, List<Integer> indexList) {
+    private String concatStr(String[] splitString, List<Integer> indexList) {
         StringBuilder str = new StringBuilder();
         for (int i = 0; i < indexList.size(); i++) {
             int index = indexList.get(i);
@@ -90,8 +87,12 @@ public class CSVReader {
         return str.toString();
     }
 
-    public static void main(String[] args) throws Exception {
+    public static void main(String[] args) {
+        if (args.length != 4) {
+            throw new IllegalArgumentException("Wrong number of arguments.");
+        }
         ArgsName argsName = ArgsName.of(args);
-        handle(argsName);
+        CSVReader csvReader = new CSVReader(argsName);
+        csvReader.handle(argsName);
     }
 }
