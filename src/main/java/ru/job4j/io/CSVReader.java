@@ -42,9 +42,8 @@ public class CSVReader {
                     listIndex = retrieveColumnsIndices(line, filter);
                 }
                 String concatString = concatStr(line, listIndex);
-                listWriter.add(concatString + System.lineSeparator());
+                listWriter.add(concatString);
             }
-
             outPutData(listWriter);
         } catch (IOException e) {
             e.printStackTrace();
@@ -64,10 +63,10 @@ public class CSVReader {
 
     private void outPutData(List<String> listWriter) {
         if ("stdout".equals(out)) {
-            System.out.println(listWriter);
+            listWriter.forEach(System.out::println);
         } else {
             try (PrintWriter pw = new PrintWriter(new FileWriter(out, StandardCharsets.UTF_8))) {
-                pw.println(listWriter);
+                listWriter.forEach(s -> pw.println(s));
             } catch (IOException e) {
                 e.printStackTrace();
             }
