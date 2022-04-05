@@ -28,6 +28,7 @@ public class EchoServer {
                     for (str = in.readLine(); str != null && !str.isEmpty(); str = in.readLine()) {
                         System.out.println(str);
                     }
+                    out.flush();
                 }
             }
         }
