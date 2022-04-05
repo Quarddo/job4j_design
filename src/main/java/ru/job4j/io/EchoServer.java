@@ -22,7 +22,7 @@ public class EchoServer {
                     if (str.contains("Hello")) {
                         out.write("Hi my dear friend!".getBytes(StandardCharsets.UTF_8));
                     }
-                    if ((!str.contains("Exit") && !str.contains("Hello"))) {
+                    if (!str.contains("Exit") && !str.contains("Hello")) {
                         out.write("What do you want my dear friend?".getBytes(StandardCharsets.UTF_8));
                     }
                     for (str = in.readLine(); str != null && !str.isEmpty(); str = in.readLine()) {
