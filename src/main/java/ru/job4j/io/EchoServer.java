@@ -15,9 +15,15 @@ public class EchoServer {
                     out.write("HTTP/1.1 200 OK\r\n\r\n".getBytes(StandardCharsets.UTF_8));
                     String str = in.readLine();
                     System.out.println(str);
-                    if (str.contains("Bye")) {
+                    if (str.contains("Exit")) {
                         server.close();
                         System.out.println("Server close!");
+                    }
+                    if (str.contains("Hello")) {
+                        out.write("Hi my dear friend!".getBytes(StandardCharsets.UTF_8));
+                    }
+                    if ((!str.contains("Exit") && !str.contains("Hello"))) {
+                        out.write("What do you want my dear friend?".getBytes(StandardCharsets.UTF_8));
                     }
                     for (str = in.readLine(); str != null && !str.isEmpty(); str = in.readLine()) {
                         System.out.println(str);
