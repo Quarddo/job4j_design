@@ -18,14 +18,5 @@ public class UsageLog4j {
         char currency = '$';
         LOG.debug("User info : name - {}, age - {}, weight - {}, height - {}, child - {}, have car - {}, price car - {}, currency - {}",
                 name, age, weight, height, child, haveCar, priceCar, currency);
-
-
-
-
-        //LOG.trace("trace message");
-        //LOG.debug("debug message");
-        //LOG.info("info message");
-        //LOG.warn("warn message");
-        //LOG.error("error message");
     }
 }
