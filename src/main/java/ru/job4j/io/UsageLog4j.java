@@ -16,7 +16,8 @@ public class UsageLog4j {
         boolean haveCar = true;
         int priceCar = 50000;
         char currency = '$';
-        LOG.debug("User info : name - {}, age - {}, weight - {}, height - {}, child - {}, have car - {}, price car - {}, currency - {}",
-                name, age, weight, height, child, haveCar, priceCar, currency);
+        long numberApartment = 233L;
+        LOG.debug("User info : name - {}, age - {}, weight - {}, height - {}, child - {}, have car - {}, price car - {}, currency - {}, numberApartment - {}",
+                name, age, weight, height, child, haveCar, priceCar, currency, numberApartment);
     }
 }
