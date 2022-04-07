@@ -7,7 +7,7 @@ import com.google.gson.GsonBuilder;
 
 public class Main {
     public static void main(String[] args) {
-        final User user = new User("Maksim", 26, true,
+        final User user = new User(true, 26, "Maksim",
                 new Address("Pushkina"),
                 new String[] {"Teriushov", "Married"});
         /** Преобразуем объект user в json - строку. */
@@ -20,11 +20,11 @@ public class Main {
                         + "\"name\":Maksim,"
                         + "\"age\":26,"
                         + "\"car\":true,"
-                        + "\"Address\":"
+                        + "\"address\":"
                         + "{"
                         + "\"street\":Pushkina"
                         + "},"
-                        + "\" statuses\":"
+                        + "\"statuses\":"
                         + "[\"Student\", \"Free\"]"
                         + "}";
 
