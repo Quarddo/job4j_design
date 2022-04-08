@@ -20,9 +20,9 @@ public class User {
     @Override
     public String toString() {
         return "User{"
-                + ", car=" + car
+                + "car=" + car
                 + ", age=" + age
-                + "name=" + name
+                + ", name=" + name
                 + ", street=" + address
                 + ", statuses=" + Arrays.toString(statuses)
                 + '}';

@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<user car="true" age="26" name="Maksim">
+    <address street="Pushkina"/>
+    <statuses>
+        <status>Teriushov</status>
+        <status>Married</status>
+    </statuses>
+</user>
