@@ -35,6 +35,26 @@ public class User {
         this.statuses = statuses;
     }
 
+    public boolean isCar() {
+        return car;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public String[] getStatuses() {
+        return statuses;
+    }
+
     @Override
     public String toString() {
         return "User{"
