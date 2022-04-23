@@ -1,4 +1,4 @@
-package ru.job4j.io.exam;
+/**package ru.job4j.io.exam;
 
 import java.io.*;
 import java.nio.file.Files;
@@ -53,3 +53,4 @@ public class SearchByCriteria {
         handle(argsName);
     }
 }
+*/
