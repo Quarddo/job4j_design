@@ -27,9 +27,9 @@ create table category_item(
 create table items(
 	id serial primary key,
 	name varchar(255),
-	user_id references users(id)),
-	state_id references state_item(id),
-	category_id references category_item(id);
+	user_id int references users(id),
+	state_id int references state_item(id),
+	category_id int references category_item(id));
 
 create table comments_items(
 	id serial primary key,

@@ -1,4 +1,4 @@
-insert into roles(name) values ('напдающий');
+insert into roles(name) values ('нападающий');
 insert into roles(name) values ('защитник');
 insert into roles(name) values ('вратарь');
 
@@ -33,7 +33,7 @@ insert into items(name, user_id, state_id, category_id)
 insert into items(name, user_id, state_id, category_id) 
             values ('не пропустить гол', 3, 1, 1);
 
-insert into comments_item(comment, item_id) 
+insert into comments_items(comment, item_id) 
             values ('главное победить', 1);
 insert into comments_item(comment, item_id) 
             values ('нужно больше бить по воротам', 2);
