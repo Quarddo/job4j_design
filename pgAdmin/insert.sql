@@ -35,11 +35,11 @@ insert into items(name, user_id, state_id, category_id)
 
 insert into comments_items(comment, item_id) 
             values ('главное победить', 1);
-insert into comments_item(comment, item_id) 
+insert into comments_items(comment, item_id) 
             values ('нужно больше бить по воротам', 2);
-insert into comments_item(comment, item_id) 
+insert into comments_items(comment, item_id) 
             values ('меньше эмоций', 3);
-insert into comments_item(comment, item_id) 
+insert into comments_items(comment, item_id) 
             values ('сохраняй бдительность', 4);
 
 insert into attachs(name, item_id) values ('схема игры', 2);
