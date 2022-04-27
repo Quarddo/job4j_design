@@ -35,7 +35,7 @@ and p.name like '%жен%';
 select * from product p
 join type t
 on p.type_id = t.id
-and p.expired_date > '2022.02.01';
+and p.expired_date < current_date;
 
 select * from product p
 join type t 
