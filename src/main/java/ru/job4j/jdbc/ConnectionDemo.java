@@ -9,12 +9,13 @@ import java.sql.SQLException;
 
 public class ConnectionDemo {
     public static void main(String[] args) throws ClassNotFoundException, SQLException {
-        Class.forName("org.postgresql.Driver");
         Config config = new Config("app.properties");
         config.load();
         String url = config.value("jdbc.url");
         String login = config.value("jdbc.login");
         String password = config.value("jdbc.password");
+        String driver = config.value("jdbc.driver");
+        Class.forName(driver);
         try (Connection connection = DriverManager.getConnection(url, login, password)) {
             DatabaseMetaData metaData = connection.getMetaData();
             System.out.println(metaData.getUserName());
