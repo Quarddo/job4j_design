@@ -1,29 +1,22 @@
 package ru.job4j.jdbc;
 
-import ru.job4j.io.Config;
-
-import java.io.BufferedReader;
-import java.io.FileInputStream;
-import java.io.FileReader;
-import java.io.IOException;
-import java.nio.charset.StandardCharsets;
+import java.io.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Properties;
 import java.util.StringJoiner;
 
 public class TableEditor implements AutoCloseable {
     private Connection connection;
-    private Properties properties;
+    private final Properties properties;
 
     public TableEditor(Properties properties) throws Exception {
         this.properties = properties;
         initConnection();
     }
 
-    private void initConnection() throws SQLException, ClassNotFoundException {
+    void initConnection() throws Exception {
         Class.forName(properties.getProperty("org.postgresql.Driver"));
         String url = properties.getProperty("jdbc.url");
         String login = properties.getProperty("jdbc.login");
@@ -31,7 +24,7 @@ public class TableEditor implements AutoCloseable {
         connection = DriverManager.getConnection(url, login, password);
     }
 
-    private void statement(String sql) throws Exception {
+    private void statement(String sql) {
         try (Statement statement = connection.createStatement()) {
             statement.execute(sql);
         } catch (Exception e) {
@@ -39,25 +32,25 @@ public class TableEditor implements AutoCloseable {
         }
     }
 
-    public void createTable(String tableName) throws Exception {
+    public void createTable(String tableName) {
         String sql = String.format(
                 "create table if not exists %s();", tableName);
         statement(sql);
     }
 
-    public void dropTable(String tableName) throws Exception {
+    public void dropTable(String tableName) {
         String sql = String.format(
                 "drop table if exist %s;", tableName);
         statement(sql);
     }
 
-    public void addColumn(String tableName, String columnName, String type) throws Exception {
+    public void addColumn(String tableName, String columnName, String type) {
         String sql = String.format(
                 "alter table %s add column %s %s;", tableName, columnName, type);
         statement(sql);
     }
 
-    public void dropColumn(String tableName, String columnName) throws Exception {
+    public void dropColumn(String tableName, String columnName) {
         String sql = String.format(
                 "alter table %s drop column %s;", tableName, columnName);
         statement(sql);
@@ -66,6 +59,7 @@ public class TableEditor implements AutoCloseable {
     public void renameColumn(String tableName, String columnName, String newColumnName) {
         String sql = String.format(
                 "alter table %s rename column %s to %s;", tableName, columnName, newColumnName);
+        statement(sql);
     }
 
     public static String getTableScheme(Connection connection, String tableName) throws Exception {
@@ -94,15 +88,14 @@ public class TableEditor implements AutoCloseable {
         }
     }
 
-    public static void main(String[] args) throws Exception {
-
-        try (BufferedReader reader = new BufferedReader(
-                new FileReader("app.properties", StandardCharsets.UTF_8))) {
-            Properties properties = new Properties();
+    public static void main(String[] args) {
+        Properties properties = new Properties();
+        try (InputStream in= TableEditor.class.getClassLoader()
+                .getResourceAsStream("app.properties")) {
             String tableName = "Table";
             String columnName = "People";
             String newColumnName = "Cars";
-            properties.load(reader);
+            properties.load(in);
             try (TableEditor tableEditor = new TableEditor(properties)) {
                 tableEditor.createTable(tableName);
                 System.out.println("Создание таблицы");
@@ -114,6 +107,8 @@ public class TableEditor implements AutoCloseable {
                 System.out.println("Удаление столбца");
                 tableEditor.renameColumn(tableName, columnName, newColumnName);
                 System.out.println("Переименование столбца");
+            } catch (Exception e) {
+                e.printStackTrace();
             }
         } catch (IOException e) {
             e.printStackTrace();
