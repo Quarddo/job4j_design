@@ -90,7 +90,7 @@ public class TableEditor implements AutoCloseable {
 
     public static void main(String[] args) {
         Properties properties = new Properties();
-        try (InputStream in= TableEditor.class.getClassLoader()
+        try (InputStream in = TableEditor.class.getClassLoader()
                 .getResourceAsStream("app.properties")) {
             String tableName = "Table";
             String columnName = "People";
