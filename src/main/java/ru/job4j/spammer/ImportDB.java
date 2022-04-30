@@ -1,6 +1,5 @@
 package ru.job4j.spammer;
 
-
 import java.io.*;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -25,9 +24,12 @@ public class ImportDB {
         try (BufferedReader rd = new BufferedReader(new FileReader(dump))) {
             rd.lines().forEach(line -> {
                 String[] user = line.split(";");
+                if (user.length != 2 || user[0].isEmpty() || user[1].isEmpty()) {
+                    throw new IllegalArgumentException("Данные не соответствуют шаблону ввода");
+                }
                 String userName = user[0];
-                String userMail = user[1];
-                users.add(new User(userName, userMail));
+                String userEMail = user[1];
+                users.add(new User(userName, userEMail));
             });
         }
         return users;
@@ -37,11 +39,11 @@ public class ImportDB {
         Class.forName(cfg.getProperty("jdbc.driver"));
         try (Connection cnt = DriverManager.getConnection(
                 cfg.getProperty("jdbc.url"),
-                cfg.getProperty("jdbc.username"),
+                cfg.getProperty("jdbc.login"),
                 cfg.getProperty("jdbc.password")
         )) {
             for (User user : users) {
-                try (PreparedStatement ps = cnt.prepareStatement("insert into users ...")) {
+                try (PreparedStatement ps = cnt.prepareStatement("insert into users(name, email) values (?, ?)")) {
                     ps.setString(1, user.name);
                     ps.setString(2, user.email);
                     ps.execute();
