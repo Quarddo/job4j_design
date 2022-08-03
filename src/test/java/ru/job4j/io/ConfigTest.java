@@ -25,7 +25,7 @@ public class ConfigTest {
 
     @Test
     public void whenPairWithCommentAndEmpty() {
-        String path = "./data/pair_with_comment_empty.properties";
+        String path = "./data/pair_with_comment_and_empty.properties";
         Config config = new Config(path);
         config.load();
         assertThat(config.value(""), is(nullValue()));
